@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="home-container">
+    <header class="home-header">
+        <h1>Welcome to Our Handwritten Document Service</h1>
+        <p>Your one-stop solution for submitting and reviewing handwritten documents.</p>
+    </header>
+
+    <section class="home-intro">
+        <h2>About Our App</h2>
+        <p>
+            Our application connects requesters with providers who can assist in creating and reviewing handwritten documents. 
+            Whether you need help with your notes, assignments, or any handwritten work, our platform allows you to find the right provider for your needs.
+        </p>
+        <p>
+            Requesters can upload their documents, receive handwritten work, and rate providers based on their performance. 
+            Providers can set their prices, accept requests, and showcase their skills.
+        </p>
+    </section>
+
+    <section class="home-features">
+        <h2>Features</h2>
+        <ul>
+            <li>Easy document uploads and submissions</li>
+            <li>Provider ratings and reviews</li>
+            <li>Secure payment options</li>
+            <li>User-friendly interface</li>
+            <li>Real-time chat support</li>
+        </ul>
+    </section>
+
+    <section class="home-call-to-action">
+        <h2>Get Started Today!</h2>
+        <p>Join us now and experience seamless document handling.</p>
+        <a href="{{ url_for('login') }}" class="cta-button">Login</a>
+        <a href="{{ url_for('register') }}" class="cta-button">Register</a>
+    </section>
+</div>
+{% endblock %} 

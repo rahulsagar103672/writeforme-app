@@ -1,0 +1,617 @@
+/* Root Variables */
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #50c878;
+    --accent-color: #ff6b6b;
+    --background-color: #f5f7fa;
+    --text-color: #2c3e50;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+}
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all var(--transition-speed) ease;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light Mode */
+body.light-mode {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Provider Styles */
+.provider-nav {
+    background: linear-gradient(90deg, #00a8e1, #00bfff);
+}
+
+.provider-nav a {
+    color: white;
+}
+
+.provider-section {
+    background: #ffffff;
+    color: #333;
+}
+
+/* Dark Mode Provider Styles */
+body.dark-mode .provider-section {
+    background: #1c1c1c;
+    color: #ffffff;
+}
+
+/* Requester Styles */
+.requester-nav {
+    background: linear-gradient(90deg, #e50914, #db0000);
+}
+
+.requester-nav a {
+    color: white;
+}
+
+.requester-section {
+    background: #f9f9f9;
+    color: #333;
+}
+
+/* Dark Mode Requester Styles */
+body.dark-mode .requester-section {
+    background: #1c1c1c;
+    color: #ffffff;
+}
+
+/* Common Styles */
+nav {
+    padding: 15px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ffdd57;
+}
+
+/* Dashboard Layout */
+.dashboard {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Cards */
+.request-card, .work-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--box-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.request-card:hover, .work-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.status-badge.pending {
+    background-color: #ffd700;
+    color: #000;
+}
+
+.status-badge.in-progress {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.status-badge.completed {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-accent {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* File Upload */
+.file-upload {
+    border: 2px dashed #ccc;
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    transition: border-color var(--transition-speed);
+    cursor: pointer;
+}
+
+.file-upload:hover {
+    border-color: var(--primary-color);
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.file-upload label {
+    display: block;
+    cursor: pointer;
+}
+
+.file-upload i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+/* Chat Interface */
+.chat-container {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.messages-container {
+    height: 400px;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.message {
+    max-width: 80%;
+    margin-bottom: 1rem;
+    animation: messageSlide 0.3s ease;
+}
+
+.message.sent {
+    margin-left: auto;
+}
+
+.message-content {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    position: relative;
+}
+
+.message.sent .message-content {
+    background: var(--primary-color);
+    color: white;
+}
+
+.message.received .message-content {
+    background: #f0f2f5;
+    color: var(--text-color);
+}
+
+/* Animations */
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Loading States */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard {
+        padding: 1rem;
+    }
+
+    .request-card, .work-card {
+        padding: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .messages-container {
+        height: 300px;
+    }
+
+    .home-container {
+        padding: 10px;
+    }
+
+    .home-header h1 {
+        font-size: 2rem;
+    }
+
+    .home-intro, .home-features, .home-call-to-action {
+        padding: 15px;
+    }
+
+    .cta-button {
+        padding: 8px 16px;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed);
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    max-width: 500px;
+    width: 90%;
+    transform: translateY(-50px);
+    transition: transform var(--transition-speed);
+}
+
+.modal.active .modal-content {
+    transform: translateY(0);
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    transition: border-color var(--transition-speed);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* Rating Stars */
+.rating {
+    display: inline-flex;
+    gap: 0.25rem;
+}
+
+.star {
+    color: #ffd700;
+    font-size: 1.25rem;
+    cursor: pointer;
+    transition: transform var(--transition-speed);
+}
+
+.star:hover {
+    transform: scale(1.2);
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    background: white;
+    box-shadow: var(--box-shadow);
+    animation: slideIn 0.3s ease;
+    z-index: 1000;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Progress Bar */
+.progress-bar {
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary-color);
+    width: 0;
+    transition: width var(--transition-speed);
+}
+
+/* Home Page Styles */
+.home-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.home-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.home-header h1 {
+    font-size: 2.5rem;
+    color: #6a11cb;
+    margin-bottom: 10px;
+}
+
+.home-intro, .home-features, .home-call-to-action {
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-intro:hover, .home-features:hover, .home-call-to-action:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.home-intro h2, .home-features h2, .home-call-to-action h2 {
+    color: #2575fc;
+    margin-bottom: 15px;
+}
+
+.home-features ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.cta-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.cta-button:hover {
+    background: linear-gradient(90deg, #2575fc, #6a11cb);
+    transform: scale(1.05);
+}
+
+/* Typography */
+h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+/* Button Styles for Dark/Light Mode Toggle */
+.toggle-button {
+    cursor: pointer;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #00a8e1;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+    background-color: #007bb5;
+}
+
+/* Title Styles */
+h1 {
+    font-size: 2.5em; /* Adjust the size of the title */
+    font-weight: bold; /* Make the title bold */
+    text-align: center; /* Center the title */
+    margin: 20px 0; /* Add some margin above and below */
+    color: #00a8e1; /* Change the color of the title */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Add a subtle shadow for depth */
+}
+
+/* Tagline Styles */
+p {
+    font-size: 1.2em; /* Adjust the size of the tagline */
+    text-align: center; /* Center the tagline */
+    margin-bottom: 40px; /* Add some margin below the tagline */
+    color: #333; /* Change the color of the tagline */
+}
+
+/* Dark Mode Title and Tagline Styles */
+body.dark-mode h1 {
+    color: #ffffff; /* Change title color in dark mode */
+}
+
+body.dark-mode p {
+    color: #cccccc; /* Change tagline color in dark mode */
+}
+
+/* Container for Works Sections */
+.works-container {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack sections vertically */
+    gap: 20px; /* Space between sections */
+    margin: 20px; /* Margin around the container */
+}
+
+/* Section Styles */
+.works-section {
+    background: #ffffff; /* Light background for sections */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Padding inside sections */
+}
+
+/* Section Title Styles */
+.works-section h2 {
+    font-size: 1.8em; /* Size of section titles */
+    color: #00a8e1; /* Color for section titles */
+    margin-bottom: 10px; /* Space below titles */
+}
+
+/* List Styles */
+.works-section ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove padding */
+}
+
+/* List Item Styles */
+.works-section li {
+    background: #f9f9f9; /* Light background for list items */
+    border: 1px solid #e0e0e0; /* Border around list items */
+    border-radius: 5px; /* Rounded corners for list items */
+    padding: 15px; /* Padding inside list items */
+    margin-bottom: 10px; /* Space between list items */
+    transition: background 0.3s; /* Smooth background transition */
+}
+
+/* Hover Effect for List Items */
+.works-section li:hover {
+    background: #e0f7fa; /* Change background on hover */
+}
+
+/* Dark Mode Styles */
+body.dark-mode .works-section {
+    background: #1c1c1c; /* Dark background for sections */
+    color: #ffffff; /* Light text */
+}
+
+body.dark-mode .works-section li {
+    background: #2c2c2c; /* Dark background for list items */
+    border: 1px solid #444; /* Dark border for list items */
+}
+
+body.dark-mode .works-section h2 {
+    color: #00bfff; /* Light color for section titles in dark mode */
+} 

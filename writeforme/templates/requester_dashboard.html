@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard">
+    <div class="header">
+        <h2>Welcome, {{ user.username }}!</h2>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+    
+    <div class="user-info">
+        <div class="avatar">
+            {% if session.username %}
+                {{ session.username[0].upper() }}
+            {% else %}
+                U
+            {% endif %}
+        </div>
+        <h3>
+            {% if session.username %}
+                {{ session.username }}
+            {% else %}
+                {{ user.username }}
+            {% endif %}
+        </h3>
+        <p>Service Requester</p>
+    </div>
+
+    <div class="upload-section">
+        <h3>Upload New Request</h3>
+        <form method="POST" action="{{ url_for('upload_request') }}" enctype="multipart/form-data">
+            <div class="file-upload">
+                <input type="file" name="pdf" id="pdf-upload" accept=".pdf" required>
+                <label for="pdf-upload">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Choose PDF file or drag here</span>
+                </label>
+            </div>
+            <button type="submit" class="submit-btn">Submit Request</button>
+        </form>
+    </div>
+
+    <div class="requests-section">
+        <h3>My Requests</h3>
+        {% for request in requests %}
+            <div class="request-card {{ request.status }}">
+                <div class="request-info">
+                    <h4>Request #{{ request.id }}</h4>
+                    <p>Status: {{ request.status }}</p>
+                    <p>Submitted: {{ request.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                    {% if request.completed_at %}
+                        <p>Completed: {{ request.completed_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                    {% endif %}
+                    
+                    {% if request.provider %}
+                        <p>Provider: {{ request.provider.username }} (Average Rating: {{ request.provider_average_rating | round(1) }} / 5)</p>
+                    {% endif %}
+                    
+                    {% if request.status == 'completed' and request.handwritten_file %}
+                        <div class="handwritten-submission">
+                            <p>Handwritten Work:</p>
+                            <a href="{{ url_for('uploaded_file', folder='handwritten', filename=request.handwritten_file) }}" 
+                               target="_blank" class="view-btn">
+                                View Handwritten Document
+                            </a>
+                        </div>
+
+                        <form action="{{ url_for('rate_work', request_id=request.id) }}" method="POST">
+                            <label for="score">Rate the Provider:</label>
+                            <select name="score" id="score" required>
+                                <option value="">Select a rating</option>
+                                <option value="1">1 Star</option>
+                                <option value="2">2 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="5">5 Stars</option>
+                            </select>
+                            <textarea name="comment" placeholder="Leave a comment (optional)"></textarea>
+                            <button type="submit" class="submit-btn">Submit Rating</button>
+                        </form>
+                    {% endif %}
+                </div>
+                
+                {% if request.provider_id %}
+                    <a href="{{ url_for('chat', request_id=request.id) }}" class="chat-link">Chat with Provider</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .request-card {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+    }
+    
+    .request-card.completed {
+        border-left: 4px solid #28a745;
+    }
+    
+    .request-card.pending {
+        border-left: 4px solid #ffc107;
+    }
+    
+    .request-card.in_progress {
+        border-left: 4px solid #007bff;
+    }
+    
+    .view-btn {
+        display: inline-block;
+        padding: 8px 15px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+    
+    .view-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %} 

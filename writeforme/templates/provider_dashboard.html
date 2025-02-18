@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard">
+    <div class="header">
+        <h2>Welcome, {{ provider.username }}!</h2>
+        <p>Average Rating: {{ average_rating | round(1) }} / 5</p>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+    
+    <div class="user-info">
+        <div class="avatar">
+            {% if session.username %}
+                {{ session.username[0].upper() }}
+            {% else %}
+                U
+            {% endif %}
+        </div>
+        <h3>
+            {% if session.username %}
+                {{ session.username }}
+            {% else %}
+                {{ provider.username }}
+            {% endif %}
+        </h3>
+        <p>Service Provider</p>
+    </div>
+
+    <!-- Active Works Section -->
+    <section class="work-section">
+        <h3>Active Works</h3>
+        {% for work in active_works %}
+            <div class="work-card">
+                <div class="work-info">
+                    <p>Request #{{ work.id }}</p>
+                    <p>Requester: {{ work.requester.username }}</p>
+                    <p>Average Rating: N/A</p>
+                    <p>Original PDF: <a href="{{ url_for('uploaded_file', folder='pdfs', filename=work.pdf_file) }}" target="_blank">View PDF</a></p>
+                    
+                    <!-- Add Chat Link -->
+                    <a href="{{ url_for('chat', request_id=work.id) }}" class="chat-btn">
+                        Chat with Requester
+                    </a>
+                </div>
+                <div class="submit-form">
+                    <form action="{{ url_for('submit_handwritten', request_id=work.id) }}" method="POST" enctype="multipart/form-data">
+                        <div class="file-input">
+                            <label for="handwritten-{{ work.id }}">Upload Handwritten Document (PDF only):</label>
+                            <input type="file" 
+                                   id="handwritten-{{ work.id }}" 
+                                   name="handwritten" 
+                                   accept=".pdf" 
+                                   required>
+                            <small class="file-format-hint">Please upload your handwritten work as a PDF file</small>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit Handwritten Work</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+
+    <!-- Completed Works Section -->
+    <section class="completed-works-section">
+        <h3>Previous Works</h3>
+        {% if completed_works %}
+            <ul class="completed-works-list">
+                {% for work in completed_works %}
+                    <li>
+                        <p>Request #{{ work.id }} - Completed on {{ work.completed_at.strftime('%Y-%m-%d %H:%M') }}</p>
+                        <p>Handwritten Document: <a href="{{ url_for('uploaded_file', folder='handwritten', filename=work.handwritten_file) }}" target="_blank">View Handwritten Document</a></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No previous works found.</p>
+        {% endif %}
+    </section>
+
+    <!-- Available Requests Section -->
+    <section class="requests-section">
+        <h3>Available Requests</h3>
+        {% for request in available_requests %}
+            <div class="request-card">
+                <p>Request #{{ request.id }}</p>
+                <p>From: {{ request.requester.username }}</p>
+                <p>PDF: <a href="{{ url_for('uploaded_file', folder='pdfs', filename=request.pdf_file) }}" target="_blank">View PDF</a></p>
+                <a href="{{ url_for('accept_request', request_id=request.id) }}" class="accept-btn">Accept Request</a>
+            </div>
+        {% endfor %}
+    </section>
+
+    <div class="my-works">
+        <h3>My Works</h3>
+        {% for work in my_works %}
+            <div class="request-card">
+                <div class="request-info">
+                    <h4>Request #{{ work.id }}</h4>
+                    <p>Status: {{ work.status }}</p>
+                    {% if work.status == 'in_progress' %}
+                        <form method="POST" action="{{ url_for('submit_work', request_id=work.id) }}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Upload Handwritten Work</label>
+                                <input type="file" name="handwritten" accept=".jpg,.jpeg,.png" required>
+                            </div>
+                            <button type="submit">Submit Work</button>
+                        </form>
+                    {% endif %}
+                    
+                    {% if work.rating %}
+                        <p>Rating: {{ '⭐' * work.rating }}</p>
+                    {% endif %}
+                    
+                    <a href="{{ url_for('chat', request_id=work.id) }}" class="chat-link">Chat with Requester</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
